@@ -5,7 +5,7 @@ const connectDB = require('./config/db');
 
 
 
-const port = config.port || 3000;
+const port = config.port || 5000;
 // start server
 const startServer = async () => {
     try {

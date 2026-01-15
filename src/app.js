@@ -15,12 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
-    res.json({
-        success: true,
-        message: "welcome to api",
-
-    });
+  res.json({
+    success: true,
+    message: "welcome to api",
+  });
 });
+
+// Auth routes
+const authRoutes = require('./modules/routes/auth.routes');
+app.use('/api/v1/auth', authRoutes);
 
 
 
