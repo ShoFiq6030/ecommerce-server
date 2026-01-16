@@ -15,15 +15,11 @@ const adminUserSchema = new mongoose.Schema(
       select: false,
     },
 
-    first_name: {
+    name: {
       type: String,
       required: true,
     },
 
-    last_name: {
-      type: String,
-      required: true,
-    },
 
     type_id: {
       type: mongoose.Schema.Types.ObjectId,

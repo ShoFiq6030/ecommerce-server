@@ -5,11 +5,14 @@ const {
   userSignin,
   adminSignup,
   adminSignin,
+  userGoogleSignin
 } = require("../controllers/auth.controller");
 
 // User routes
 router.post("/user/signup", userSignup);
 router.post("/user/signin", userSignin);
+router.post("/user/google", userGoogleSignin);
+
 
 // Admin user routes
 router.post("/admin/signup", adminSignup);

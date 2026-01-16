@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 // User signup service
 const userSignupService = async (userData) => {
     try {
-        const { email, password, first_name, last_name, telephone } = userData;
+        const { email, password, name, telephone } = userData;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -22,8 +22,7 @@ const userSignupService = async (userData) => {
         const newUser = new User({
             email,
             password: hashedPassword,
-            first_name,
-            last_name,
+            name,
             telephone,
         });
 
@@ -85,10 +84,50 @@ const userSigninService = async (email, password) => {
     }
 };
 
+// user google signup service 
+const userGoogleSigninService = async (userData) => {
+    try {
+
+        const { email, name, avatar, provider, providerId } = userData
+
+
+        // console.log("google login api hit", provider);
+        // console.log(userData);
+        // Find user by username and include password in the result
+        let user = await User.findOne({ email })
+        if (!user) {
+            user = await User.create({
+                email,
+                name,
+                image: avatar,
+                auth_provider: provider,
+                provider_id: providerId,
+            });
+        }
+        // console.log(user);
+        // Return user data without password
+        const userResponse = {
+            ...user._doc
+        };
+
+        return {
+            success: true,
+            message: "User signed in successfully",
+            user: userResponse,
+        };
+    } catch (error) {
+        console.error("Error in userSigninService:", error);
+        return {
+            success: false,
+            message: error.message || "Internal server error",
+        };
+    }
+}
+
 // Admin user signup service
 const adminSignupService = async (adminData) => {
     try {
-        const { email, password, first_name, last_name, type_id } = adminData;
+        const { email, password, name, type_id } = adminData;
 
         // Check if admin user already exists
         const existingAdmin = await AdminUser.findOne({ email });
@@ -104,8 +143,7 @@ const adminSignupService = async (adminData) => {
         const newAdmin = new AdminUser({
             email,
             password: hashedPassword,
-            first_name,
-            last_name,
+            name,
             type_id,
         });
 
@@ -181,4 +219,5 @@ module.exports = {
     userSigninService,
     adminSignupService,
     adminSigninService,
+    userGoogleSigninService
 };

@@ -8,19 +8,17 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    image: {
+      type: String,
+    },
 
     password: {
       type: String,
-      required: true,
-      select: false, // do not return password
+      // required: true,
+      select: false,
     },
 
-    first_name: {
-      type: String,
-      required: true,
-    },
-
-    last_name: {
+    name: {
       type: String,
       required: true,
     },
@@ -28,10 +26,15 @@ const userSchema = new mongoose.Schema(
     telephone: {
       type: String,
     },
+    auth_provider: {
+      type: String,
+      default: "credential"
+    },
+    provider_id: String,
   },
   {
     timestamps: true,
-    versionKey:false
+    versionKey: false
   }
 );
 

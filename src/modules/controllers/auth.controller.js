@@ -1,7 +1,7 @@
 const User = require("../models/userModel/user.model");
 const AdminUser = require("../models/userModel/adminUser");
 const bcrypt = require("bcrypt");
-const { userSignupService, userSigninService, adminSignupService, adminSigninService } = require("../services/auth.service");
+const { userSignupService, userSigninService, adminSignupService, adminSigninService,userGoogleSigninService } = require("../services/auth.service");
 
 // User signup controller
 const userSignup = async (req, res) => {
@@ -40,6 +40,28 @@ const userSignin = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+// User google signin controller
+const userGoogleSignin= async (req,res)=>{
+
+ try {
+        const userData =req.body
+
+        const userResponse = await userGoogleSigninService(userData)
+
+        if (!userResponse.success) {
+            return res.status(400).json({ ...userResponse });
+        }
+
+        res.status(200).json({
+            ...userResponse,
+        });
+    } catch (error) {
+        console.error("Error in userSignin:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+}
 
 // Admin user signup controller
 const adminSignup = async (req, res) => {
@@ -81,4 +103,5 @@ module.exports = {
     userSignin,
     adminSignup,
     adminSignin,
+    userGoogleSignin
 };
