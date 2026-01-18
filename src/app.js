@@ -25,6 +25,10 @@ app.get('/', (req, res) => {
 const authRoutes = require('./modules/routes/auth.routes');
 app.use('/api/v1/auth', authRoutes);
 
+// Category routes
+const categoryRoutes = require('./modules/routes/category.routes');
+app.use('/api/v1/categories', categoryRoutes);
+
 
 
 // Health check

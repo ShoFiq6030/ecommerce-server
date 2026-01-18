@@ -1,5 +1,5 @@
 const User = require("../models/userModel/user.model");
-const AdminUser = require("../models/userModel/adminUser");
+const AdminUser = require("../models/userModel/adminUser.model");
 const AdminType = require("../models/userModel/adminType.model");
 const bcrypt = require("bcrypt");
 
@@ -174,32 +174,31 @@ const adminSignupService = async (adminData) => {
 // Admin user signin service
 const adminSigninService = async (email, password) => {
     try {
-        // Find admin user by username and include password in the result
-        const admin = await AdminUser.findOne({ email }).select("+password");
+        const admin = await AdminUser.findOne({ email })
+            .select("+password")
+            .populate("type");
+
         if (!admin) {
-            return { success: false, message: "admin not found" }
+            return { success: false, message: "admin not found" };
         }
 
-        // Compare passwords
         const isPasswordValid = await bcrypt.compare(password, admin.password);
         if (!isPasswordValid) {
-
-            return { success: false, message: "Invalid credentials" }
-
+            return { success: false, message: "Invalid credentials" };
         }
 
         // Update last login
         admin.last_login = new Date();
         await admin.save();
 
-        // Populate the admin type
-        await admin.populate("type_id");
 
-        // Return admin data without password
-        const adminResponse = {
-            ...admin._doc
-        };
+        // Build safe response
+        const adminResponse = admin.toObject({ virtuals: true });
 
+
+
+        delete adminResponse.password;
+        // delete adminResponse.type.id;
         return {
             success: true,
             message: "Admin user signed in successfully",

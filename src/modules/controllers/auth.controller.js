@@ -1,7 +1,7 @@
 const User = require("../models/userModel/user.model");
-const AdminUser = require("../models/userModel/adminUser");
+const AdminUser = require("../models/userModel/adminUser.model");
 const bcrypt = require("bcrypt");
-const { userSignupService, userSigninService, adminSignupService, adminSigninService,userGoogleSigninService } = require("../services/auth.service");
+const { userSignupService, userSigninService, adminSignupService, adminSigninService, userGoogleSigninService } = require("../services/auth.service");
 
 // User signup controller
 const userSignup = async (req, res) => {
@@ -42,10 +42,10 @@ const userSignin = async (req, res) => {
 };
 
 // User google signin controller
-const userGoogleSignin= async (req,res)=>{
+const userGoogleSignin = async (req, res) => {
 
- try {
-        const userData =req.body
+    try {
+        const userData = req.body
 
         const userResponse = await userGoogleSigninService(userData)
 

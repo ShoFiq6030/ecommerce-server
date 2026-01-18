@@ -20,7 +20,6 @@ const adminUserSchema = new mongoose.Schema(
       required: true,
     },
 
-
     type_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "AdminType",
@@ -33,8 +32,20 @@ const adminUserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    toJSON: { virtuals: true },   
+    toObject: { virtuals: true }, 
   }
 );
+
+
+  //  Virtual for renamed populate
+
+adminUserSchema.virtual("type", {
+  ref: "AdminType",
+  localField: "type_id",
+  foreignField: "_id",
+  justOne: true,
+});
 
 module.exports = mongoose.model("AdminUser", adminUserSchema);
