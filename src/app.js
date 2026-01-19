@@ -29,6 +29,12 @@ app.use('/api/v1/auth', authRoutes);
 const categoryRoutes = require('./modules/routes/category.routes');
 app.use('/api/v1/categories', categoryRoutes);
 
+// Product routes
+const productRoutes = require('./modules/routes/product.routes');
+app.use('/api/v1/products', productRoutes);
+
+
+
 
 
 // Health check
