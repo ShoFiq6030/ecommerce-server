@@ -1,16 +1,30 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
+const connectDB = require("./config/db")
+const mongoose = require('mongoose');
 
 const app = express();
 
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
+// Ensure DB connection for serverless environments (Vercel)
+const ensureDbConnected = async (req, res, next) => {
+    try {
+        if (mongoose.connection.readyState !== 1) {
+            await connectDB();
+        }
+        return next();
+    } catch (err) {
+        console.error('DB connection error on request:', err.message || err);
+        return res.status(500).json({ success: false, message: 'Database connection error' });
+    }
+};
 
+app.use(ensureDbConnected);
 
 
 // Routes
