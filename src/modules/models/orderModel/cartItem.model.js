@@ -21,6 +21,14 @@ const cartItemSchema = new mongoose.Schema(
       min: 1,
       default: 1,
     },
+    size: {
+      type: String,
+      default: null,
+    },
+    color: {
+      type: String,
+      default: null,
+    },
 
     // Optional snapshot (recommended): keep price at the time it was added
     unitPrice: {
@@ -42,15 +50,14 @@ const cartItemSchema = new mongoose.Schema(
   }
 );
 
-// Prevent duplicate same product in the same session (one row per product)
-cartItemSchema.index({ sessionId: 1, productId: 1 }, { unique: true });
+// Prevent duplicate same product with same size/color in the same session
+cartItemSchema.index({ sessionId: 1, productId: 1, size: 1, color: 1 }, { unique: true });
 
 // Hide soft-deleted by default
-cartItemSchema.pre(/^find/, function (next) {
+cartItemSchema.pre(/^find/, function () {
   if (!this.getOptions().withDeleted) {
     this.where({ deletedAt: null });
   }
-  next();
 });
 
 module.exports = mongoose.model("CartItem", cartItemSchema);

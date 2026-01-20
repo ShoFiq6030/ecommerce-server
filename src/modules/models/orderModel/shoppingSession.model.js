@@ -34,11 +34,10 @@ const shoppingSessionSchema = new mongoose.Schema(
 );
 
 // Hide soft-deleted by default (with escape hatch)
-shoppingSessionSchema.pre(/^find/, function (next) {
+shoppingSessionSchema.pre(/^find/, function () {
   if (!this.getOptions().withDeleted) {
     this.where({ deletedAt: null });
   }
-  next();
 });
 
 // Virtual populate: session -> cartItems

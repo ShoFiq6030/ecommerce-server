@@ -10,7 +10,7 @@ const {
     updateProductInventoryCount,
     getProductsWithDiscount,
 } = require("../controllers/product.controller");
-const requireUserAndPermission = require("../middleware/isAuthorized");
+const requireUserAndPermission = require("../../middleware/isAuthorizedAdmin");
 
 // Product routes
 router.post("/", requireUserAndPermission("create-product"), createProduct);

@@ -33,6 +33,10 @@ app.use('/api/v1/categories', categoryRoutes);
 const productRoutes = require('./modules/routes/product.routes');
 app.use('/api/v1/products', productRoutes);
 
+// Cart routes
+const cartRoutes = require('./modules/routes/cart.routes');
+app.use('/api/v1/cart', cartRoutes);
+
 
 
 

@@ -25,8 +25,16 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    size: String,
-    color: String,
+    size: {
+      type: String,
+      default: ""
+    },
+    color:
+    {
+      type: String,
+      default: ""
+
+    },
     weight: String,
     discountId: {
       type: mongoose.Schema.Types.ObjectId,

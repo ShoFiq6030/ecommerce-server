@@ -1,9 +1,9 @@
-const AdminUser = require("../models/userModel/adminUser.model");
+const AdminUser = require("../modules/models/userModel/adminUser.model");
 
 const requireUserAndPermission = (permission) => {
     return async (req, res, next) => {
         try {
-            console.log("=====");
+         
             const userId = req.headers["user-id"];
             console.log(userId);
 

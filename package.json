@@ -2,9 +2,9 @@
   "name": "e-commerce-server",
   "version": "1.0.0",
   "description": "Express.js API server for e-commerce app",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "dev": "node --watch src/server.js"
   },
   "dependencies": {
