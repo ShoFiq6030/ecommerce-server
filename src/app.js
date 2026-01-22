@@ -8,7 +8,13 @@ const app = express();
 
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        "http://localhost:3000",
+        "https://ecommerce-client-pearl-six.vercel.app/" // frontend live URL
+    ],
+    credentials: true
+}));
 app.use(express.json());
 
 // Ensure DB connection for serverless environments (Vercel)
@@ -29,10 +35,10 @@ app.use(ensureDbConnected);
 
 // Routes
 app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: "welcome to api",
-  });
+    res.json({
+        success: true,
+        message: "welcome to api",
+    });
 });
 
 // Auth routes

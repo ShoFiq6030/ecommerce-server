@@ -22,7 +22,7 @@ A comprehensive backend API server for an e-commerce application built with Node
 
 ### Base URL
 ```
-http://localhost:5000
+https://ecommerce-server-psi-one.vercel.app/
 ```
 
 ### Authentication Routes (`/api/v1/auth`)
