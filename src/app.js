@@ -11,10 +11,13 @@ const app = express();
 app.use(cors({
     origin: [
         "http://localhost:3000",
-        "https://ecommerce-client-pearl-six.vercel.app/" // frontend live URL
+        "https://ecommerce-client-pearl-six.vercel.app" // frontend live URL
     ],
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "user-id", "x-user-id"],
 }));
+app.options("*", cors());
 app.use(express.json());
 
 // Ensure DB connection for serverless environments (Vercel)
